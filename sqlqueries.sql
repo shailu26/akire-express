@@ -1,0 +1,14 @@
+CREATE TABLE `rUBKuxI4BB`.
+`user`(`id`
+  INT NOT NULL AUTO_INCREMENT, `full_name`
+  VARCHAR(50) NOT NULL, `email`
+  VARCHAR(50) UNIQUE, `password`
+  VARCHAR(250) NOT NULL, PRIMARY KEY(`id`)) ENGINE = InnoDB;
+
+CREATE TABLE `rUBKuxI4BB`.
+`todo`(`id`
+  INT NOT NULL AUTO_INCREMENT, `user_id`
+  INT(50) NOT NULL, `date`
+  DATETIME NOT NULL, `title`
+  VARCHAR(80) NOT NULL, `status`
+  VARCHAR(50) NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`user_id`) REFERENCES user(`id`)) ENGINE = InnoDB
