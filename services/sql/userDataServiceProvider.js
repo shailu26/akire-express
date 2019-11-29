@@ -25,7 +25,6 @@ module.exports = {
         return new Promise((resolve, reject) =>{
             commonFunction.excuteQuery(sql, q)
             .then(details => {
-                console.log(details.length)
                 resolve(details.length);
             })
             .catch(err => {

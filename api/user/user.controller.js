@@ -26,7 +26,6 @@ module.exports = {
     'updateUserById' : async function (req, res) {
         const sql = req.app.get('sql');
         let userId = req.decoded.id;
-        console.log(req.body);
         if (req.body.isEmailChanged) {
             let isEmailExist = await userDataServiceProvider.isEmailExist(sql, req.body.email);
             if (isEmailExist) {
@@ -71,7 +70,6 @@ module.exports = {
         }
     },
     'updatePassword': function(req, res) {
-        console.log(req);
         const sql = req.app.get('sql');
         const userId = req.decoded.id;
         const confirmPassword = req.body.confirmPassword;

@@ -120,7 +120,6 @@ module.exports = {
   const sql = req.app.get('sql');
   const email = req.decoded.email;
   const password = req.body.password;
-  console.log({email}, '.......');
   const error = {status: 401,message: 'UNAUTHORIZED'}
   userDataServiceProvider.getUserByEmail(sql, email)
     .then(user => {
@@ -135,7 +134,6 @@ module.exports = {
                 next(err);
               } else {
                 req.body.confirmPassword = hash;
-                console.log(req.body.confirmPassword);
                 next();
               }
             });

@@ -14,9 +14,7 @@ module.exports = {
     'createTodo': function(sql, todo, userId) {
         let {date, title, status} = todo;
         date = moment(date).format('YYYY-M-D HH:mm:ss');
-        console.log({date})
         let q = `insert into todo (user_id, date, title, status) values(${+userId}, '${date}', '${title}', '${status}')`;
-        console.log({q})
         return commonFunction.excuteQuery(sql, q);
     },
     'deleteByTodoId': function(sql, todoId) {
