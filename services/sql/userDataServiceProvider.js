@@ -22,14 +22,16 @@ module.exports = {
     },
     'isEmailExist': function(sql, email) {
         let q = `select * from user where email='${email}'`
-        commonFunction.excuteQuery(sql, q)
-        .then(details => {
-            console.log(details)
-            return details.length;
+        return new Promise((resolve, reject) =>{
+            commonFunction.excuteQuery(sql, q)
+            .then(details => {
+                console.log(details.length)
+                resolve(details.length);
+            })
+            .catch(err => {
+                reject(err);
+            });
         })
-        .catch(err => {
-            return true;
-        });
     },
     'updatePassword': function(sql, userId, password) {
         let q = `UPDATE user SET password = '${password}' WHERE id = ${+userId}`;

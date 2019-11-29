@@ -23,12 +23,14 @@ module.exports = {
 
     },
 
-    'updateUserById' : function (req, res) {
+    'updateUserById' : async function (req, res) {
         const sql = req.app.get('sql');
         let userId = req.decoded.id;
+        console.log(req.body);
         if (req.body.isEmailChanged) {
-            if (userDataServiceProvider.isEmailExist(req.body.email)) {
-                res.status(500).json({error: err.code === 'ER_DUP_ENTRY'? {'code': 'ER_DUP_ENTRY'} : err});
+            let isEmailExist = await userDataServiceProvider.isEmailExist(sql, req.body.email);
+            if (isEmailExist) {
+                res.status(500).json({error: {'code': 'ER_DUP_ENTRY'}});
             } else {
                 userDataServiceProvider.updateUserById(sql, userId, req.body).then(details => {
                 return res.status(201).json({
@@ -54,8 +56,8 @@ module.exports = {
     },
     'createUser': function(req, res) {
         const sql = req.app.get('sql');
-        if (userDataServiceProvider.isEmailExist(req.body.email)) {
-                res.status(500).json({error: err.code === 'ER_DUP_ENTRY'? {'code': 'ER_DUP_ENTRY'} : err});
+        if (userDataServiceProvider.isEmailExist(sql, req.body.email)) {
+                res.status(500).json({error: {'code': 'ER_DUP_ENTRY'}});
         } else {
             userDataServiceProvider.createUser(sql, req.body).then(details => {
             return res.status(201).json({
