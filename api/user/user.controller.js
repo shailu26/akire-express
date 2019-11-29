@@ -53,9 +53,11 @@ module.exports = {
             })
         }
     },
-    'createUser': function(req, res) {
+    'createUser': async function(req, res) {
         const sql = req.app.get('sql');
-        if (userDataServiceProvider.isEmailExist(sql, req.body.email)) {
+        let isEmailExist = await userDataServiceProvider.isEmailExist(sql, req.body.email);
+
+        if (isEmailExist) {
                 res.status(500).json({error: {'code': 'ER_DUP_ENTRY'}});
         } else {
             userDataServiceProvider.createUser(sql, req.body).then(details => {
