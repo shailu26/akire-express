@@ -8,7 +8,7 @@ module.exports = {
     'updateTodoById': function (sql, todoId, userId, reqBody) {
         let {date, title, status} = reqBody;
         date = moment(date).format('YYYY-M-D HH:mm:ss');
-        let q = `UPDATE todo SET user_id = ${+userId}, date='${date}', title = '${title}', status = '${status}' WHERE id = ${+todoId}`;
+        let q = `UPDATE todo SET user_id = ${+userId}, date='${date}', title = '${title}', status = '${status}' WHERE id = ${+todoId} and user_id=${+userId}`;
         return commonFunction.excuteQuery(sql, q);
     },
     'createTodo': function(sql, todo, userId) {
@@ -17,12 +17,12 @@ module.exports = {
         let q = `insert into todo (user_id, date, title, status) values(${+userId}, '${date}', '${title}', '${status}')`;
         return commonFunction.excuteQuery(sql, q);
     },
-    'deleteByTodoId': function(sql, todoId) {
-        let q = `delete from todo where id='${+todoId}'`;
+    'deleteByTodoId': function(sql, todoId, userId) {
+        let q = `delete from todo where id='${+todoId}' and user_id=${+userId}`;
         return commonFunction.excuteQuery(sql, q);
     },
-    'getTodoById': function(sql, todoId) {
-        let q = `select * from todo where id=${+todoId}`;
+    'getTodoById': function(sql, todoId, userId) {
+        let q = `select * from todo where id=${+todoId} and user_id=${+userId}`;
         return commonFunction.excuteQuery(sql, q);
     }
 }

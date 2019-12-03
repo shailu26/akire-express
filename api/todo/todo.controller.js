@@ -20,11 +20,12 @@ module.exports = {
     'getTodoById': function(req,res) {
         const sql = req.app.get('sql');
         let todoId = req.params.todoId;
-        todoDataServiceProvider.getTodoById(sql, todoId).then(todo => {
+        let userId = req.decoded.id;
+        todoDataServiceProvider.getTodoById(sql, todoId, userId).then(todo => {
             res.status(201).json({
                 success: true,
                 message: 'successfully fetched',
-                todo: todo[0]
+                todo: todo[0] ? todo[0]: {}
             })
         })
         .catch(err => {
@@ -64,7 +65,8 @@ module.exports = {
     'deleteByTodoId': function(req, res) {
         let todoId = req.params.todoId;
         const sql = req.app.get('sql');
-        todoDataServiceProvider.deleteByTodoId(sql, todoId).then(() => {
+        let userId = req.decoded.id;
+        todoDataServiceProvider.deleteByTodoId(sql, todoId, userId).then(() => {
             res.status(201).json({
                 success: true,
                 message: 'successfully deleted',
